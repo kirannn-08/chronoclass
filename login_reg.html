@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="login_reg.css">
+    <title>Chronoclass login page</title>
+</head>
+
+<body>
+<div class="watermark">© 2025 Ravelli Kiran Venkat</div>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form>
+                <h1>Create Account</h1>
+                <input type="email" id="reg-email" required placeholder="Email">
+                <input type="password" id="reg-password" placeholder="Password">
+                <input type="password" id="reg-confirm-password" required placeholder="comnfirm password"/>
+                <select id="reg-class" required>
+                 <option disabled selected>Select a Class</option>
+                 </select>
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form>
+                <h1>Sign In</h1>
+               
+                 <input type="email" id="login-email" required  placeholder="Email"/>
+
+               
+                 <input type="password" id="login-password" required placeholder="Password"/>
+               
+                <select id="user-role" required>
+                    <option value="student">Student</option>
+                    <option value="cr">Class Representative</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Hey There 👋 !</h1>
+                    <p>Enter your  details to use all of site features and choose your class.</p>
+                    <button class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Welcome back !</h1>
+                    <h4>We offer:</h4>
+                    <ul>
+                        <li>📘 View Class Count</li>
+                        <li>📅 Check Deadlines</li>
+                        <li>📚 Access Materials</li>
+                        <li>💬 Class-specific Info</li>
+                    </ul>
+                    <p>Register yourself in your respective class by signing up , tap below to enter sign-up</p>
+                    <button class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login_reg.js"></script>
+</body>
+
+</html>

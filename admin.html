@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="admin-container">
+    <h1>Admin Dashboard</h1>
+
+    <!-- Class Creation -->
+    <section class="card">
+      <h2>Create New Class</h2>
+      <form id="class-form">
+        <input type="text" id="branch" placeholder="Branch (e.g., EEE)" required />
+        <input type="text" id="section" placeholder="Section (e.g., A)" required />
+        <input type="text" id="year" placeholder="Year (e.g., 24-28)" required />
+        <button type="submit">Create Class</button>
+      </form>
+    </section>
+
+    <!-- Assign CR -->
+    <section class="card">
+      <h2>Assign Class Representative</h2>
+      <form id="assign-cr-form">
+        <select id="assign-class-id" required>
+          <option disabled selected>Select Class</option>
+          <!-- Populated dynamically -->
+        </select>
+        <input type="email" id="cr-email" placeholder="CR Email (e.g., cr_24-28@eee.A)" required />
+        <input type="password" id="cr-password" placeholder="CR Password" required />
+        <button type="submit">Assign CR</button>
+      </form>
+    </section>
+    <section class = "logout">
+      <button id="logout-btn" class="logout-btn">🚪 Logout</button>
+    </section>
+
+    <!-- Class Table -->
+    <section class="card">
+      <h2>All Classes</h2>
+      <table id="users-table">
+        <thead>
+          <tr>
+            <th>Class ID</th>
+            <th>Branch</th>
+            <th>Section</th>
+            <th>Year</th>
+            <th>CR Email</th>
+            <th>CR Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </section>
+  </div>
+<div class="watermark">© 2025 Ravelli Kiran Venkat</div>
+  <script src="admin.js"></script>
+  <footer class="site-footer">
+  <p>Made with ❤️ by Ravelli Kiran Venkat • ChronoClass Project • NIT Warangal</p>
+</footer>
+</body>
+</html>
