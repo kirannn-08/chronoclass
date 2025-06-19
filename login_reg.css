@@ -216,14 +216,49 @@ body{
   pointer-events: none;
   user-select: none;
 }
-@media (min-width: 768px) {
+/* ================================
+   📱 Responsive Login/Register Fix
+   ================================ */
+@media (max-width: 768px) {
   .container {
-    flex-direction: row;
+    width: 95%;
+    min-height: unset;
+    border-radius: 0;
+    box-shadow: none;
+    flex-direction: column;
+    padding: 20px;
   }
 
-  .right {
-    flex: 1 1 50%;
-    padding: 3rem 2rem;
-    text-align: left;
+  .form-container {
+    width: 100%;
+    position: relative;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    animation: none !important;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .toggle-container {
+    display: none;
+  }
+
+  input, select, button {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
+
+  h1, h2 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .container button {
+    font-size: 14px;
+    padding: 12px;
   }
 }
