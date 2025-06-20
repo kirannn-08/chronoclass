@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="login_reg.css">
     <title>Chronoclass login page</title>
 </head>
@@ -15,53 +15,72 @@
         <div class="form-container sign-up">
             <form>
                 <h1>Create Account</h1>
+                <div class ="input-box">
                 <input type="email" id="reg-email" required placeholder="Email">
+                <i class='bxr  bxs-envelope-alt'  ></i> 
+                </div>
+                <div class ="input-box">
                 <input type="password" id="reg-password" placeholder="Password">
+                <i class='bxr  bxs-lock-open-alt'  ></i> 
+                </div>
+                <div class ="input-box">
                 <input type="password" id="reg-confirm-password" required placeholder="comnfirm password"/>
+                <i class='bxr  bxs-lock'  ></i> 
+                </div>
+                <div class ="input-box">
                 <select id="reg-class" required>
                  <option disabled selected>Select a Class</option>
                  </select>
-                <button>Sign Up</button>
+                 <i class='bxr  bxs-blocks'  ></i> 
+                 </div>
+                <button class="btn">Sign Up</button>
             </form>
         </div>
+
+
         <div class="form-container sign-in">
             <form>
                 <h1>Sign In</h1>
-               
-                 <input type="email" id="login-email" required  placeholder="Email"/>
+                <div class ="input-box">
+                 <input type="email" id="login-email" required  placeholder="user id"/>
+                 <i class='bxr  bxs-user'  ></i> 
+                </div>
 
-               
+
+                <div class ="input-box">
                  <input type="password" id="login-password" required placeholder="Password"/>
-               
+                 <i class='bxr  bxs-lock'  ></i> 
+                </div>
+
+                <div class ="input-box">
                 <select id="user-role" required>
+                    <option disabled selected>Select Your Role</option>
                     <option value="student">Student</option>
                     <option value="cr">Class Representative</option>
                     <option value="admin">Admin</option>
                 </select>
-                <button>Sign In</button>
+                <i class='bxr  bxs-group'  ></i> 
+                </div>
+                <button class="btn">Sign In</button>
             </form>
         </div>
         <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Hey There 👋 !</h1>
-                    <p>Enter your  details to use all of site features and choose your class.</p>
-                    <button class="hidden" id="login">Sign In</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Welcome back !</h1>
-                    <h4>We offer:</h4>
-                    <ul>
-                        <li>📘 View Class Count</li>
-                        <li>📅 Check Deadlines</li>
-                        <li>📚 Access Materials</li>
-                        <li>💬 Class-specific Info</li>
-                    </ul>
-                    <p>Register yourself in your respective class by signing up , tap below to enter sign-up</p>
-                    <button class="hidden" id="register">Sign Up</button>
-                </div>
+            <div class="toggle-panel toggle-left">
+                <h1>Hello Welcome!</h1>
+                <p>Don't have an Account?</p>
+                <button class="btn" id="register">sign-up</button>
             </div>
+
+             <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an Account?</p>
+                <button class="btn" id="login">sign-in</button>
+            </div>
+        
+
+          
         </div>
+        
     </div>
 
     <script src="login_reg.js"></script>
