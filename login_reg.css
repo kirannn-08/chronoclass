@@ -9,14 +9,14 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(90deg,#fcf7e3,#f9f0d7);
+    background: linear-gradient(90deg,#f9fafb,#f9fafb);
 }
 
 .container{
     position: relative;
     width: 850px;
     height: 550px;
-    background: #faf9f6;
+    background: #fff;
     border-radius: 30px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     margin: 20px;
@@ -27,7 +27,7 @@ body{
     right: 0;
     width: 50%;
     height: 100%;
-    background: #faf9f6;
+    background: #fff;
     display: flex;
     align-items: center;
     color: #333;
@@ -57,7 +57,7 @@ form{
 .container h1{
     font-size: 36px;
     margin: -10px 0;
-    color: #a18b60;
+    color: #1e3a8a;
 }
 .input-box{
     position: relative;
@@ -66,16 +66,16 @@ form{
 .input-box input , select{
     width: 100%;
     padding: 13px 50px 13px 20px;
-    background: #eee;
+    background: #fff;
     border-radius: 8px;
-    border: 1px solid #a18b60;
+    border: 1px solid #374151;
     outline: none;
     font-size: 16px;
-    color: #333;
+    color: #1e3a8a;
     font-weight: 500;
 }
 .input-box ::placeholder{
-    color: #888;
+    color: #1e3a8a;
     font-weight: 400;
 }
 .input-box i {
@@ -84,12 +84,12 @@ form{
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
-    color: #888;
+    color: #1e3a8a;
 }
 .btn{
     width: 100%;
     height:48px;
-    background-color: #9d9d6e;
+    background-color: #10b981;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: none;
@@ -109,7 +109,7 @@ form{
     width: 100%;
     height: 100%;
     left: -50%;
-    background: #8f8f64;
+    background: #1e3a8a;
     border-radius: 150px;
     z-index: 2;
     transition: 1.2s ease-in-out;
