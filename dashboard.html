@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+  <title>ChronoClass</title>
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+<script src="firebase.js">
+</script>
+</head>
+
+<header class="dashboard-header">
+  <div class="logo">ChronoClass</div>
+  <div class="user-info" id="header-user-info">Loading...</div>
+  <button onclick="logout()" class="logout-btn">Logout</button>
+</header>
+<body>
+  <div class="watermark">© 2025 Ravelli Kiran Venkat</div>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="user-info">
+        <div class="avatar"></div>
+        <p>User Name</p>
+        
+      </div>
+     <nav class="sidebar-menu">
+  <a href="#" class="active" data-target="dashboard-page">🏠 Dashboard</a>
+  <a href="#" data-target="calendar-page">📅 Calendar</a>
+  <a href="#" data-target="events-page">🎉 Events</a>
+  <a href="#" data-target="syllabus-page">📝 Syllabus</a>
+  <a href="#" data-target="classes-page">➕ Classes Count</a>
+  <a href="#" data-target="resources-page">📘 Resources</a>
+  
+</nav>
+    </aside>
+
+    <!-- Main Dashboard -->
+   <main class="main">
+  <div id="dashboard-page" class="page active">
+    <h1>Dashboard</h1>
+    <!-- your dashboard content -->
+
+      <div class="top-widgets">
+        
+
+       <div class="card timer">
+            <h2>Study Timer</h2>
+            <div class="time" id="timer">00:00</div>
+            <button class="mango" id="startBtn">Start</button>
+            <button id="resetBtn">Reset</button>
+    </div>
+
+        <div class="card-deadlines">
+          <h2>Exams/Assignment Deadlines</h2>
+          <!-- Add Deadline button, initially hidden -->
+        <button id="add-deadline-btn" onclick="toggleDeadlineForm()" class="add-Deadline-btn" style="display: none;">
+          ➕ Add Deadline
+        </button>
+
+        <!-- Deadline form -->
+        <form id="Deadline-message-form" style="display: none;">
+          <input type="text" id="Deadline-title" placeholder="Title" required />
+          <input type="date" id="Deadline-date" required />
+          <input type="time" id="Deadline-time" placeholder="Time" />
+          <textarea id="Deadline-syllabus" placeholder="Syllabus (optional)"></textarea>
+          <button type="button" onclick="saveDeadline()">Save Deadline</button>
+        </form>
+
+        <!-- Deadlines list -->
+        <div class="deadlines-list" id="Deadlines-container"></div>
+                </div>
+      </div>
+<!--Time table-->
+<div class="TT" ><h2>Time Table</h2></div>
+<div id="class-form">
+    <h3>Add Timetable Entry</h3>
+<select id="timetable-subject-code">
+  <option disabled selected>Select Subject</option>
+</select>
+    <input type="time" id="class-start">
+    <input type="time" id="class-end">
+    <select id="class-day">
+      <option value="mon">Mon</option>
+      <option value="tue">Tue</option>
+      <option value="wed">Wed</option>
+      <option value="thu">Thu</option>
+      <option value="fri">Fri</option>
+      <option value="sat">Sat</option>
+    </select>
+    <button id="add-btn" onclick="addClassBlock()">Add Entry</button>
+    <button id="update-btn" onclick="addClassBlock()" style="display:none">Update</button>
+    <button id="delete-btn" onclick="deleteClassBlock()" style="display:none">Delete</button>
+  </div>
+  
+     <div class="timetable-container">
+    <div class="time-labels"></div>
+    <div class="calendar">
+      <div class="day-column" data-day="mon">
+        <div class="day-header">Mon</div>
+      </div>
+      <div class="day-column" data-day="tue">
+        <div class="day-header">Tue</div>
+      </div>
+      <div class="day-column" data-day="wed">
+        <div class="day-header">Wed</div>
+      </div>
+      <div class="day-column" data-day="thu">
+        <div class="day-header">Thu</div>
+      </div>
+      <div class="day-column" data-day="fri">
+        <div class="day-header">Fri</div>
+      </div>
+      <div class="day-column" data-day="sat">
+        <div class="day-header">Sat</div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  
+
+  <div id="calendar-page" class="page">
+    <h1>Calendars</h1>
+
+    <!--CR only -->
+
+  <form id="calendar-form" style="display:none;" onsubmit="event.preventDefault(); saveCalendar();">
+  <input type="text" id="calendar-title" placeholder="Calendar Title" required />
+  <input type="url" id="calendar-link" placeholder="Google Drive Link" required />
+  <button type="submit">Add Calendar</button>
+</form>
+
+<div id="calendar-container"></div>
+  </div>
+
+  <div id="events-page" class="page">
+    
+ 
+<h1>Events</h1>
+<input type="text" id="search-input" placeholder="🔍 Search events..." oninput="filterEvents()" />
+
+<!-- CR Only -->
+<button id="add-event-btn" onclick="toggleMessageForm()" style="display: none;" class="add-event-btn">➕ Paste WhatsApp Message</button>
+
+<form id="event-message-form" style="display: none;">
+  <h3>📝 Manually Add Event</h3>
+<input type="text" id="event-title" placeholder="Event Title" required />
+<input type="date" id="event-date" required />
+<input type="text" id="event-time" placeholder="Time (e.g. 9:00 AM - 4:00 PM)" />
+<input type="text" id="event-location" placeholder="Location" />
+<textarea id="event-description" placeholder="Description..." required></textarea>
+
+<hr>
+
+<h3>📩 OR Paste WhatsApp Message</h3>
+<textarea id="event-message" placeholder="Paste WhatsApp message to extract details..."></textarea>
+<button type="button" onclick="parseEventMessage()">Parse & Auto-Fill</button>
+
+<hr>
+
+<button type="button" onclick="saveManualEvent()">💾 Save Event</button>
+</form>
+
+<div id="events-container" class="events-grid">
+  <!-- Parsed events will be shown here -->
+</div>
+
+ 
+
+  </div>
+
+<div id="syllabus-page" class="page">
+  <h1>Syllabus</h1>
+  
+  <!-- CR Only -->
+  <form id="syllabus-form" style="display:none;" onsubmit="event.preventDefault(); saveSyllabus();">
+    <input type="text" id="syllabus-title" placeholder="Syllabus Title" required />
+    <input type="url" id="syllabus-link" placeholder="Google Drive Link" required />
+    <button type="submit">Add Syllabus</button>
+  </form>
+
+  <div id="syllabus-container"></div>
+</div>
+
+  <div id="classes-page" class="page">
+   <h1>Classes count</h1>
+
+<!-- CR Controls -->
+<div id="class-controls" style="display: none; margin-bottom: 10px;">
+  <input type="text" id="new-subject-name" placeholder="Subject Name" />
+<input type="text" id="new-subject-code" placeholder="Subject Code (e.g. MATH101)" />
+<input type="color" id="new-subject-color" value="#3498db" />
+<button id="add-subject-btn">Add Subject</button>
+</div>
+
+<!-- Subject Cards -->
+<div class="class-count-grid" id="subjects-container"></div>
+
+<!-- Modal to view and add class dates -->
+<div id="date-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3 id="modal-subject-name">Subject Name</h3>
+    <ul id="date-list"></ul>
+
+    <!-- CR can add dates -->
+    <div id="cr-date-controls" style="display: none; margin-top: 10px;">
+      <input type="date" id="new-class-date" />
+      <button id="add-class-date-btn">Add Class Date</button>
+    </div>
+
+    <button onclick="closeModal()" id="close-modal-btn">Close</button>
+  </div>
+</div>
+  
+  </div>
+
+  <div class="page" id="resources-page" style="display: none;">
+  <h2>📚 Resources & Notes</h2>
+
+  <!-- 🔐 Only visible to CR -->
+  <div id="resource-form" style="display: none;">
+    <input type="text" id="resource-title" placeholder="Title" />
+    <input type="url" id="resource-link" placeholder="Your Link Here" />
+    <button onclick="saveResource()">➕ Add Resource</button>
+  </div>
+
+  <!-- 📂 Resources Display -->
+  <div id="resource-container" class="resource-grid"></div>
+</div>
+</main>
+  </div>
+  <script src="dashboard.js"></script>
+  <footer class="site-footer">
+  <p>Made with ❤️ by Ravelli Kiran Venkat • ChronoClass Project • NIT Warangal</p>
+</footer>
+</body>
+</html>
