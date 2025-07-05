@@ -214,14 +214,29 @@ body {
   flex: 1;
   min-width: 500px;
   height: auto;
-  background: #e3e0d4;
-  border: 2px dashed #aaa;
+  background: none; /* remove dashed border for real images */
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-weight: bold;
-  color: #666;
+  padding: 0;
+  overflow: hidden;
+}
+.aspect-ratio-box {
+  position: relative;
+  width: 100%;
+  padding-top: 62.5%; /* 1000/1600 = 0.625 (16:10) */
+  overflow: hidden;
+  border-radius: 10px;
+}
+.aspect-ratio-box img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 /* Footer */
@@ -256,15 +271,7 @@ html {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.aspect-ratio-box img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
+
 
 
 
@@ -306,13 +313,22 @@ html {
   .logo img {
     width: 50px;
   }
-    .preview {
+      .preview {
     flex-direction: column;
     text-align: center;
   }
 
-  .preview .text, 
+  .preview .text,
   .preview .screenshot {
+    min-width: 100%;
     width: 100%;
+  }
+
+  .preview .text h3 {
+    font-size: 1.3rem;
+  }
+
+  .preview .text p {
+    font-size: 1rem;
   }
 }
