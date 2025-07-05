@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
@@ -18,7 +19,9 @@
 </head>
 
 <header class="dashboard-header">
-  <div class="logo">ChronoClass</div>
+  <div class="logo"> <img src="images/chronoclass.png" alt="logo">
+  <span class="logo-text">ChronoClass</span>
+ </div>
   <div class="user-info" id="header-user-info">Loading...</div>
   <button onclick="logout()" class="logout-btn">Logout</button>
 </header>
@@ -28,17 +31,15 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="user-info">
-        <div class="avatar"></div>
-        <p>User Name</p>
-        
+        <div class="avatar"><i class='bxr  bxs-user'  ></i> </div>
       </div>
      <nav class="sidebar-menu">
-  <a href="#" class="active" data-target="dashboard-page">🏠 Dashboard</a>
-  <a href="#" data-target="calendar-page">📅 Calendar</a>
-  <a href="#" data-target="events-page">🎉 Events</a>
-  <a href="#" data-target="syllabus-page">📝 Syllabus</a>
-  <a href="#" data-target="classes-page">➕ Classes Count</a>
-  <a href="#" data-target="resources-page">📘 Resources</a>
+  <a href="#" class="active" data-target="dashboard-page"><i class='bx  bx-home-alt'  ></i>  Dashboard</a>
+  <a href="#" data-target="calendar-page"> <i class='bx  bx-calendar-alt'  ></i>  Calendar</a>
+  <a href="#" data-target="events-page"><i class='bx  bx-flag-alt'  ></i>  Events</a>
+  <a href="#" data-target="syllabus-page"><i class='bx  bx-edit'  ></i>  Syllabus</a>
+  <a href="#" data-target="classes-page"><i class='bx  bx-clipboard-plus'  ></i> Classes Count</a>
+  <a href="#" data-target="resources-page"><i class='bx  bx-book-bookmark'  ></i>  Resources</a>
   
 </nav>
     </aside>
@@ -46,85 +47,81 @@
     <!-- Main Dashboard -->
    <main class="main">
   <div id="dashboard-page" class="page active">
-    <h1>Dashboard</h1>
-    <!-- your dashboard content -->
+  <h1>Dashboard</h1>
 
-      <div class="top-widgets">
-        
+  <!-- 🟡 TIMER AT TOP -->
+  <div class="card timer">
+    <h2>Study Timer</h2>
+    <div class="time" id="timer">00:00</div>
+    <button class="mango" id="startBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+  </div>
 
-       <div class="card timer">
-            <h2>Study Timer</h2>
-            <div class="time" id="timer">00:00</div>
-            <button class="mango" id="startBtn">Start</button>
-            <button id="resetBtn">Reset</button>
+  <!-- 🟡 TIMETABLE + DEADLINES SIDE-BY-SIDE -->
+  <div class="schedule-section">
+
+    <!-- 🔵 Timetable Section -->
+    <div class="timetable-section">
+      <div class="TT"><h2>Time Table</h2></div>
+
+      <div id="class-form">
+        <h3>Add Timetable Entry</h3>
+        <select id="timetable-subject-code">
+          <option disabled selected>Select Subject</option>
+        </select>
+        <input type="time" id="class-start">
+        <input type="time" id="class-end">
+        <select id="class-day">
+          <option value="mon">Mon</option>
+          <option value="tue">Tue</option>
+          <option value="wed">Wed</option>
+          <option value="thu">Thu</option>
+          <option value="fri">Fri</option>
+          <option value="sat">Sat</option>
+        </select>
+        <button id="add-btn" onclick="addClassBlock()">Add Entry</button>
+        <button id="update-btn" onclick="addClassBlock()" style="display:none">Update</button>
+        <button id="delete-btn" onclick="deleteClassBlock()" style="display:none">Delete</button>
+      </div>
+
+      <div class="timetable-container">
+        <div class="time-labels"></div>
+        <div class="calendar">
+          <div class="day-column" data-day="mon"><div class="day-header">Mon</div></div>
+          <div class="day-column" data-day="tue"><div class="day-header">Tue</div></div>
+          <div class="day-column" data-day="wed"><div class="day-header">Wed</div></div>
+          <div class="day-column" data-day="thu"><div class="day-header">Thu</div></div>
+          <div class="day-column" data-day="fri"><div class="day-header">Fri</div></div>
+          <div class="day-column" data-day="sat"><div class="day-header">Sat</div></div>
+          <div class="empty"></div>
+        </div>
+      </div>
     </div>
 
-        <div class="card-deadlines">
-          <h2>Exams/Assignment Deadlines</h2>
-          <!-- Add Deadline button, initially hidden -->
-        <button id="add-deadline-btn" onclick="toggleDeadlineForm()" class="add-Deadline-btn" style="display: none;">
-          ➕ Add Deadline
-        </button>
+    <!-- 🔴 Deadlines Section (on the right) -->
+    <div class="deadlines-section">
+      <h2>📌 Exams/Assignment Deadlines</h2>
 
-        <!-- Deadline form -->
-        <form id="Deadline-message-form" style="display: none;">
-          <input type="text" id="Deadline-title" placeholder="Title" required />
-          <input type="date" id="Deadline-date" required />
-          <input type="time" id="Deadline-time" placeholder="Time" />
-          <textarea id="Deadline-syllabus" placeholder="Syllabus (optional)"></textarea>
-          <button type="button" onclick="saveDeadline()">Save Deadline</button>
-        </form>
+      <!-- CR-only Add Deadline -->
+      <button id="add-deadline-btn" onclick="toggleDeadlineForm()" class="add-Deadline-btn" style="display: none;">
+        ➕ Add Deadline
+      </button>
 
-        <!-- Deadlines list -->
-        <div class="deadlines-list" id="Deadlines-container"></div>
-                </div>
-      </div>
-<!--Time table-->
-<div class="TT" ><h2>Time Table</h2></div>
-<div id="class-form">
-    <h3>Add Timetable Entry</h3>
-<select id="timetable-subject-code">
-  <option disabled selected>Select Subject</option>
-</select>
-    <input type="time" id="class-start">
-    <input type="time" id="class-end">
-    <select id="class-day">
-      <option value="mon">Mon</option>
-      <option value="tue">Tue</option>
-      <option value="wed">Wed</option>
-      <option value="thu">Thu</option>
-      <option value="fri">Fri</option>
-      <option value="sat">Sat</option>
-    </select>
-    <button id="add-btn" onclick="addClassBlock()">Add Entry</button>
-    <button id="update-btn" onclick="addClassBlock()" style="display:none">Update</button>
-    <button id="delete-btn" onclick="deleteClassBlock()" style="display:none">Delete</button>
-  </div>
-  
-     <div class="timetable-container">
-    <div class="time-labels"></div>
-    <div class="calendar">
-      <div class="day-column" data-day="mon">
-        <div class="day-header">Mon</div>
-      </div>
-      <div class="day-column" data-day="tue">
-        <div class="day-header">Tue</div>
-      </div>
-      <div class="day-column" data-day="wed">
-        <div class="day-header">Wed</div>
-      </div>
-      <div class="day-column" data-day="thu">
-        <div class="day-header">Thu</div>
-      </div>
-      <div class="day-column" data-day="fri">
-        <div class="day-header">Fri</div>
-      </div>
-      <div class="day-column" data-day="sat">
-        <div class="day-header">Sat</div>
-      </div>
+      <form id="Deadline-message-form" style="display: none;">
+        <input type="text" id="Deadline-title" placeholder="Title" required />
+        <input type="date" id="Deadline-date" required />
+        <input type="time" id="Deadline-time" placeholder="Time" />
+        <input type="text" id="Deadline-location" placeholder="Location (optional)" />
+        <textarea id="Deadline-syllabus" placeholder="Syllabus (optional)"></textarea>
+        <button type="button" onclick="saveDeadline()">Save Deadline</button>
+      </form>
+
+      <!-- Compact Cards -->
+      <div class="deadlines-list" id="Deadlines-container"></div>
     </div>
-  </div>
-  </div>
+
+  </div> <!-- end schedule-section -->
+</div> <!-- end dashboard-page -->
 
   
 
@@ -242,5 +239,9 @@
   <footer class="site-footer">
   <p>Made with ❤️ by Ravelli Kiran Venkat • ChronoClass Project • NIT Warangal</p>
 </footer>
+
+<!-- Deadline Modal -->
+
+
 </body>
 </html>

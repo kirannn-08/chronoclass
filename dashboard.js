@@ -772,6 +772,7 @@ async function saveDeadline() {
   const title = document.getElementById("Deadline-title").value.trim();
   const date = document.getElementById("Deadline-date").value.trim();
   const time = document.getElementById("Deadline-time").value.trim();
+  const location = document.getElementById("Deadline-location").value.trim();
   const syllabus = document.getElementById("Deadline-syllabus").value.trim();
 
   if (!title || !date) return alert("❗ Title and Date are required.");
@@ -781,7 +782,7 @@ async function saveDeadline() {
       .collection("classes")
       .doc(classID)
       .collection("deadlines")
-      .add({ title, date, time, syllabus });
+      .add({ title, date, time, location, syllabus });
 
     alert("✅ Deadline saved!");
     document.getElementById("Deadline-message-form").reset();
@@ -832,15 +833,22 @@ async function renderDeadlines() {
       div.classList.add("Deadline-card");
 
       div.innerHTML = `
-        <h3 class="Deadline-title">${dl.title}</h3>
+        <h3 class="Deadline-title">
+          ${role === 'cr'
+            ? `<input type="text" value="${dl.title}" onchange="updateDeadline('${dl.id}', 'title', this.value)" />`
+            : dl.title}
+        </h3>
         <span class="time-left">${getTimeLeftText(dl.date)}</span>
         <div class="event-info">
           <p>📅 <input type="date" value="${dl.date}" onchange="updateDeadline('${dl.id}', 'date', this.value)" ${role !== 'cr' ? 'disabled' : ''} /></p>
           <p>⏰ <input type="time" value="${dl.time || ''}" placeholder="Time" onchange="updateDeadline('${dl.id}', 'time', this.value)" ${role !== 'cr' ? 'disabled' : ''} /></p>
+          <p>📍<input type="text" value="${dl.location}" placeholder="Location" onchange="updateDeadline('${dl.id}', 'location', this.value)" ${role !== 'cr' ? 'disabled' : ''} /></p>
         </div>
         <div class="Deadline-syllabus">
           <strong>Syllabus:</strong>
-          <p>${dl.syllabus || "No syllabus provided."}</p>
+          ${role === 'cr'
+            ? `<textarea onchange="updateDeadline('${dl.id}', 'syllabus', this.value)">${dl.syllabus || ""}</textarea>`
+            : `<p>${dl.syllabus || "No syllabus provided."}</p>`}
         </div>
         ${role === 'cr' ? `<button onclick="deleteDeadline('${dl.id}')" class="delete-btn">Delete</button>` : ''}
       `;
@@ -864,6 +872,33 @@ async function renderDeadlines() {
     container.innerHTML = `<p>❌ Failed to load deadlines.</p>`;
   }
 }
+
+async function updateDeadline(docId, field, value) {
+  const classID = localStorage.getItem("classID");
+
+  if (!docId || !field) {
+    console.error("Invalid update request");
+    return;
+  }
+
+  try {
+    await firebase.firestore()
+      .collection("classes")
+      .doc(classID)
+      .collection("deadlines")
+      .doc(docId)
+      .update({ [field]: value });
+
+    console.log(`✅ ${field} updated`);
+    renderDeadlines();
+   
+  } catch (err) {
+    console.error(`❌ Error updating ${field}:`, err);
+    alert(`❌ Failed to update ${field}`);
+  }
+}
+
+
 async function deleteDeadline(docId) {
   const classID = localStorage.getItem("classID");
   if (!confirm("Delete this deadline?")) return;
@@ -1149,7 +1184,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      await calendarRef.add({ title, link });
+      await calendarRef.add({
+        title,
+        link,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
       alert("✅ Calendar item saved to Firestore!");
       titleInput.value = "";
       linkInput.value = "";
@@ -1161,55 +1201,51 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function renderCalendar() {
-  container.innerHTML = "";
+    container.innerHTML = "";
 
-  try {
-    const snapshot = await calendarRef.get();
-    const calendar = [];
-    snapshot.forEach(doc => {
-      calendar.push({ id: doc.id, ...doc.data() });
-    });
+    try {
+      const snapshot = await calendarRef.orderBy("createdAt", "desc").get();
 
-    calendar.reverse(); // newest first
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const fileId = extractDriveFileId(data.link);
+        const previewURL = fileId ? `https://drive.google.com/file/d/${fileId}/preview` : null;
 
-    calendar.forEach(item => {
-      const fileId = extractDriveFileId(item.link);
-      const previewURL = fileId ? `https://drive.google.com/file/d/${fileId}/preview` : null;
-
-      const card = document.createElement("div");
-      card.className = "calendar-card";
-      card.innerHTML = `
-        <h4>${item.title}</h4>
-        ${
-          previewURL
-            ? `<iframe src="${previewURL}" width="100%" height="300" allow="autoplay" style="border: none; border-radius: 8px;"></iframe>`
-            : `<p>Invalid Drive link</p>`
-        }
-        ${
-          role === "cr"
-            ? `<br><button class="delete-btn" data-id="${item.id}">Delete</button>`
-            : ""
-        }
-      `;
-      container.appendChild(card);
-    });
-
-    if (role === "cr") {
-      container.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = btn.dataset.id;
-          if (confirm("Are you sure you want to delete this calendar item?")) {
-            await calendarRef.doc(id).delete();
-            renderCalendar();
+        const card = document.createElement("div");
+        card.className = "calendar-card";
+        card.innerHTML = `
+          <h4>${data.title}</h4>
+          ${
+            previewURL
+              ? `<iframe src="${previewURL}" width="100%" height="300" allow="autoplay" style="border: none; border-radius: 8px;"></iframe>`
+              : `<p>Invalid Drive link</p>`
           }
-        });
+          ${
+            role === "cr"
+              ? `<br><button class="delete-btn" data-id="${doc.id}">Delete</button>`
+              : ""
+          }
+        `;
+        container.appendChild(card);
       });
+
+      // Attach delete events
+      if (role === "cr") {
+        container.querySelectorAll(".delete-btn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+            if (confirm("Are you sure you want to delete this calendar item?")) {
+              await calendarRef.doc(id).delete();
+              renderCalendar();
+            }
+          });
+        });
+      }
+    } catch (err) {
+      console.error("❌ Failed to load calendar:", err);
+      container.innerHTML = `<p>❌ Error loading calendar items</p>`;
     }
-  } catch (err) {
-    console.error("❌ Failed to load calendar:", err);
-    container.innerHTML = `<p>❌ Error loading calendar items</p>`;
   }
-}
 
   // Hook Save Button
   const saveBtn = form?.querySelector("button");
@@ -1218,7 +1254,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial Load
   renderCalendar();
 });
-
 
 
 
