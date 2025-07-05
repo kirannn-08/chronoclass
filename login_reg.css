@@ -9,7 +9,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(90deg,#fcf7e3,#f9f0d7);
+    background: #f4f2ea;
 }
 
 .container{
@@ -57,7 +57,7 @@ form{
 .container h1{
     font-size: 36px;
     margin: -10px 0;
-    color: #a18b60;
+    color: #2e5339;
 }
 .input-box{
     position: relative;
@@ -68,7 +68,7 @@ form{
     padding: 13px 50px 13px 20px;
     background: #eee;
     border-radius: 8px;
-    border: 1px solid #a18b60;
+    border: 1px solid #2e5339;
     outline: none;
     font-size: 16px;
     color: #333;
@@ -89,7 +89,7 @@ form{
 .btn{
     width: 100%;
     height:48px;
-    background-color: #9d9d6e;
+    background: linear-gradient(135deg, #2e5339, #4f6f5c);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: none;
@@ -109,7 +109,7 @@ form{
     width: 100%;
     height: 100%;
     left: -50%;
-    background: #8f8f64;
+    background: linear-gradient(135deg, #2e5339, #4f6f5c);
     border-radius: 150px;
     z-index: 2;
     transition: 1.2s ease-in-out;
@@ -130,6 +130,7 @@ form{
     z-index: 2;
     transition: .4s ease-in-out;
 }
+
 .toggle-panel h1,p{
     color: #fff;
 }
