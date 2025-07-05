@@ -1,12 +1,161 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=login_reg.html" />
-  <title>Redirecting to Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChronoClass – Smart Class Management</title>
+<meta name="description" content="ChronoClass helps CRs and students organize timetables, deadlines, syllabus and resources in one clean dashboard.">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <p>Redirecting to <a href="login_reg.html">ChronoClass Login</a>...</p>
+  <header class="header">
+  <div class="container nav">
+  <div class="logo"> <img src="images/chronoclass.png" alt="logo">
+  <span class="logo-text">ChronoClass</span>
+ </div>
+  
+
+  <div class="hamburger" id="hamburger">&#9776;</div>
+
+  <nav class="nav-links" id="navLinks">
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#tools">Tools</a>
+    <a href="#contact" class="btn">Contact</a>
+    <a href="login_reg.html" class="btn primary">Login</a>
+  </nav>
+</div>
+</header>
+
+  <section class="hero">
+  <div class="container hero-content">
+    <h1>
+      From <strong>Chaos</strong> to <strong>Clarity</strong> —<br />
+      <span class="subheading">Class Management Reimagined.</span>
+    </h1>
+    <p>
+      ChronoClass helps students and CRs stay organized with smart deadlines,<br>
+      syllabus tracking, and a clean dashboard — all in a forest of calm.
+    </p>
+    <a href="login_reg.html" class="cta-btn">Explore Now</a>
+  </div>
+</section>
+
+  <section id="about" class="section about">
+    <div class="container">
+      <h2>What is ChronoClass?</h2>
+      <p>
+        ChronoClass is a complete smart classroom management tool designed for colleges and universities.
+        Built with role-specific dashboards, admin-level control, and streamlined academic tools,
+        it empowers CRs, students, and admins to collaborate efficiently.
+      </p>
+    </div>
+  </section>
+
+  <section id="features" class="section features">
+    <div class="container">
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">🎛 Admin-controlled class dashboards</div>
+        <div class="feature-card">🧑‍🏫 Assign CRs to individual classes</div>
+        <div class="feature-card">🔄 Real-time timetable and deadline updates</div>
+        <div class="feature-card">📌 CRs can modify events, resources & class data</div>
+        <div class="feature-card">👩‍🎓 Students receive changes instantly</div>
+        <div class="feature-card">🔐 Secure login for CRs, Students, and Admins</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools" class="section tools">
+    <div class="container">
+      <h2>Powerful Academic Tools</h2>
+      
+      <div class="preview">
+        <div class="text">
+          <h3>📊 Dashboard</h3>
+          <p>Includes study clock, class deadlines, and a smart timetable that adapts based on the time slot.</p>
+        </div>
+        <div class="screenshot">
+          <div class="aspect-ratio-box"><img src="images/dashboard.png" alt="dashboard">
+          </div>
+          </div>
+      </div>
+
+      <div class="preview">
+        
+        <div class="screenshot">
+          <div class="aspect-ratio-box"><img src="images/events.png" alt="dashboard">
+          </div>
+        </div>
+        <div class="text">
+          <h3>📣 Events</h3>
+          <p>CRs can create events manually or paste WhatsApp messages from class groups — ChronoClass parses them automatically.</p>
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="text">
+          <h3>📅 Calendar</h3>
+          <p>A full calendar view synced with deadlines, exams, and events – accessible anytime, anywhere.</p>
+        </div>
+        <div class="screenshot"><div class="aspect-ratio-box"><img src="images/calendar.png" alt="dashboard">
+          </div></div>
+      </div>
+
+      <div class="preview">
+         
+        <div class="screenshot"><div class="aspect-ratio-box"><img src="images/syllabus.png" alt="dashboard">
+          </div></div>
+       <div class="text">
+          <h3>📚 Syllabus</h3>
+          <p>View the syllabus subject-wise, with CRs able to update topics covered as the semester progresses.</p>
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="text">
+          <h3>🔗 Resources</h3>
+          <p>CRs can upload PDFs, links, and notes. Students can download materials in one click from any device.</p>
+        </div>
+        <div class="screenshot"><div class="aspect-ratio-box"><img src="images/resources.png" alt="dashboard">
+          </div></div>
+      </div>
+
+      <div class="preview">
+         
+        <div class="screenshot"><div class="aspect-ratio-box"><img src="images/classcount.png" alt="dashboard">
+          </div></div>
+       <div class="text">
+          <h3>📈 Class Count</h3>
+          <p>Track number of classes held, and cannot alter data by creating fake data ie. adding classes completed in past. Stay compliant and accountable with visual data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container footer-content">
+      <p><a href="mailto:kiranvenkatravelli@gmail.com" class="contact-link">📧 Contact Developer</a></p>
+      <p>© 2025 ChronoClass. All rights reserved.</p>
+      <p>Made with ❤️ by Ravelli Kiran Venkat</p>
+    </div>
+  </footer>
+
+
+ <script>
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("navLinks");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Optional: close nav after clicking a link
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("show");
+    });
+  });
+</script>
 </body>
 </html>
